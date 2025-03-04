@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Chức Năng</title>
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        .menu {
+            position: relative;
+            width: 300px;
+            padding: 20px;
+            background: black;
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px lime;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .menu-header {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .menu-options {
+            display: flex;
+            justify-content: space-around;
+        }
+        .menu-options div {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .active {
+            background: lime;
+            border-radius: 5px;
+        }
+        .menu-content {
+            margin-top: 10px;
+            text-align: left;
+        }
+        .menu-section {
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 5px;
+            display: none;
+        }
+        .menu-section.active {
+            display: block;
+        }
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid white;
+            border-top: 2px solid lime;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 5px;
+            visibility: hidden;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Hiệu ứng ngôi sao lấp lánh */
+        .star {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 1.5s infinite;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0; transform: scale(0.5); }
+        }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <div class="menu-header">@trongnghiaioscheatdzzz ✖</div>
+        <div class="menu-options">
+            <div id="main-tab" class="active" onclick="showSection('main')">Mục chính</div>
+            <div id="info-tab" onclick="showSection('info')">Thông tin</div>
+        </div>
+        <div class="menu-content">
+            <div id="main" class="menu-section active">
+                <h4>Thiết Bị</h4>
+                <input type="checkbox" id="opt-device" onclick="toggleLoading(this, 'loading1')">
+                <label for="opt-device"> Boost Lock Power Device</label>
+                <div id="loading1" class="loading"></div>
+                <br>
+                <input type="checkbox" id="boost-dpi" onclick="toggleLoading(this, 'loading2')">
+                <label for="boost-dpi"> Boost Max DPI Config</label>
+                <div id="loading2" class="loading"></div>
+            </div>
+            <div id="info" class="menu-section">
+                <h4>Thông Tin</h4>
+                <p>Coder:MinhChau.accept.dpiconfig</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showSection(section) {
+            document.querySelectorAll('.menu-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(section).classList.add('active');
+            document.querySelectorAll('.menu-options div').forEach(el => el.classList.remove('active'));
+            document.getElementById(section + '-tab').classList.add('active');
+        }
+
+        function toggleLoading(checkbox, loaderId) {
+            const loader = document.getElementById(loaderId);
+            loader.style.visibility = 'visible';
+            setTimeout(() => {
+                loader.style.visibility = 'hidden';
+            }, 1000);
+        }
+
+        function createStars() {
+            for (let i = 0; i < 20; i++) {
+                let star = document.createElement('div');
+                star.classList.add('star');
+                document.body.appendChild(star);
+                star.style.top = Math.random() * window.innerHeight + 'px';
+                star.style.left = Math.random() * window.innerWidth + 'px';
+                star.style.animationDuration = (Math.random() * 1.5 + 1) + 's';
+            }
+        }
+        createStars();
+    </script>
+</body>
+</html>
