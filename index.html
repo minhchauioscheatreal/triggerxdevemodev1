@@ -1,144 +1,242 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Chức Năng</title>
-    <style>
-        body {
-            background-color: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-            position: relative;
-        }
-        .menu {
-            position: relative;
-            width: 300px;
-            padding: 20px;
-            background: black;
-            color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 10px lime;
-            text-align: center;
-            font-family: Arial, sans-serif;
-        }
-        .menu-header {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .menu-options {
-            display: flex;
-            justify-content: space-around;
-        }
-        .menu-options div {
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-        .active {
-            background: lime;
-            border-radius: 5px;
-        }
-        .menu-content {
-            margin-top: 10px;
-            text-align: left;
-        }
-        .menu-section {
-            margin-top: 15px;
-            padding: 10px;
-            background: rgba(0, 255, 0, 0.1);
-            border-radius: 5px;
-            display: none;
-        }
-        .menu-section.active {
-            display: block;
-        }
-        .loading {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid white;
-            border-top: 2px solid lime;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-left: 5px;
-            visibility: hidden;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        /* Hiệu ứng ngôi sao lấp lánh */
-        .star {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 1.5s infinite;
-        }
-        @keyframes twinkle {
-            0% { opacity: 0; transform: scale(0.5); }
-            50% { opacity: 1; transform: scale(1.2); }
-            100% { opacity: 0; transform: scale(0.5); }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>minhchauxxx</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Courier New', monospace;
+      background: url('https://files.catbox.moe/jktxk8.gif') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      padding: 30px;
+      position: relative;
+    }
+
+    /* Overlay phủ mờ nền để nội dung dễ đọc */
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 0;
+    }
+
+    .box {
+      z-index: 1;
+      width: 90%;
+      max-width: 800px;
+      border-radius: 20px;
+      padding: 30px;
+      position: relative;
+      background-color: rgba(26, 26, 26, 0.85);
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3), 0 0 20px rgba(0, 255, 255, 0.2);
+      border: 2px solid rgba(0, 255, 255, 0.5);
+      transition: box-shadow 0.3s ease-in-out;
+    }
+
+    .box:hover {
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.6), 0 0 40px rgba(0, 255, 255, 0.4);
+    }
+
+    .header-box {
+      text-align: center;
+      font-size: 28px;
+    }
+
+    .controls-box {
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .controls-box button {
+      margin: 10px;
+      padding: 10px 24px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background-color: #333;
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .controls-box button.active {
+      background-color: #a020f0;
+      box-shadow: 0 0 12px #a020f0;
+    }
+
+    .controls-box input[type='range'] {
+      width: 200px;
+      appearance: none;
+      height: 6px;
+      border-radius: 5px;
+      background: #444;
+      outline: none;
+      transition: background 0.3s;
+    }
+
+    .controls-box input[type='range']::-webkit-slider-thumb {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #0ff;
+      box-shadow: 0 0 6px #0ff;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .controls-box input[type='range']:hover::-webkit-slider-thumb {
+      transform: scale(1.2);
+    }
+
+    .smoothness {
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    .rotating-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-size: 24px;
+      transform: translate(-50%, -50%);
+      color: rgba(255, 50, 50, 0.08);
+      white-space: nowrap;
+      animation: spin 20s linear infinite;
+      text-shadow: 0 0 8px red, 0 0 20px red;
+      pointer-events: none;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+      100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    .footer-box {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .footer-box img {
+      border-radius: 12px;
+      box-shadow: 0 0 8px #0ff;
+      width: 120px;
+      height: 80px;
+      object-fit: cover;
+    }
+
+    .footer-text {
+      flex-grow: 1;
+    }
+  </style>
 </head>
 <body>
-    <div class="menu">
-        <div class="menu-header">@trongnghiaioscheatdzzz ✖</div>
-        <div class="menu-options">
-            <div id="main-tab" class="active" onclick="showSection('main')">Mục chính</div>
-            <div id="info-tab" onclick="showSection('info')">Thông tin</div>
-        </div>
-        <div class="menu-content">
-            <div id="main" class="menu-section active">
-                <h4>Thiết Bị</h4>
-                <input type="checkbox" id="opt-device" onclick="toggleLoading(this, 'loading1')">
-                <label for="opt-device"> Boost Lock Power Device</label>
-                <div id="loading1" class="loading"></div>
-                <br>
-                <input type="checkbox" id="boost-dpi" onclick="toggleLoading(this, 'loading2')">
-                <label for="boost-dpi"> Boost Max DPI Config</label>
-                <div id="loading2" class="loading"></div>
-            </div>
-            <div id="info" class="menu-section">
-                <h4>Thông Tin</h4>
-                <p>Coder:MinhChau.accept.dpiconfig</p>
-            </div>
-        </div>
+  <div class="overlay"></div> <!-- Lớp phủ nền -->
+
+  <!-- Khung 1 -->
+  <div class="box header-box">
+  Nguyen Minh Chau 🐳
+  <br />
+  <img src="https://files.catbox.moe/fw5c5n.gif" alt="Logo" style="margin: 10px auto 0; border-radius: 10px; box-shadow: 0 0 8px #0ff; width: 160px; height: auto; display: block;" />
+</div>
+
+  <!-- Khung 2 -->
+  <div class="box controls-box">
+    <div class="rotating-text">𓂀 𓆣 𓆑 𓊽 𓋹 𓂀 𓆣 𓆑 𓊽 𓋹</div>
+
+    <button id="btnOn">🟢 Smooth on.</button>
+    <button id="btnOff">🔴 Smooth shutdown.</button>
+    <br />
+
+    <input type="range" id="smoothSlider" min="0" max="100" value="50" />
+    <div class="smoothness">
+      Sensifov: <span id="smoothValue">50</span>%
     </div>
-    
-    <script>
-        function showSection(section) {
-            document.querySelectorAll('.menu-section').forEach(el => el.classList.remove('active'));
-            document.getElementById(section).classList.add('active');
-            document.querySelectorAll('.menu-options div').forEach(el => el.classList.remove('active'));
-            document.getElementById(section + '-tab').classList.add('active');
-        }
+  </div>
 
-        function toggleLoading(checkbox, loaderId) {
-            const loader = document.getElementById(loaderId);
-            loader.style.visibility = 'visible';
-            setTimeout(() => {
-                loader.style.visibility = 'hidden';
-            }, 1000);
-        }
+  <!-- Khung 3 -->
+<div class="box footer-box" style="flex-direction: column; align-items: flex-start;">
+  <div style="display: flex; gap: 10px; flex-shrink: 0;">
+    <img
+      src="https://files.catbox.moe/x5xz0h.png"
+      alt="Image 1"
+    />
+    <img
+      src="https://vareno.vn/wp-content/uploads/2020/12/C-WiFi-Logo.png"
+      alt="Image 2"
+    />
+  </div>
+  <div class="footer-text" style="margin-top: 15px;">
+    <div>👋 Xin chào! Tôi là Nguyen Minh Chau.</div>
+    <div>💡 Đây là trang demo thử nghiệm với các chức năng mới.</div>
+    <div>📜 Cảm ơn bạn đã ghé thăm! Muốn ib mua hàng hãy click logo dưới đây ⬇</div>
 
-        function createStars() {
-            for (let i = 0; i < 20; i++) {
-                let star = document.createElement('div');
-                star.classList.add('star');
-                document.body.appendChild(star);
-                star.style.top = Math.random() * window.innerHeight + 'px';
-                star.style.left = Math.random() * window.innerWidth + 'px';
-                star.style.animationDuration = (Math.random() * 1.5 + 1) + 's';
-            }
-        }
-        createStars();
-    </script>
+    <!-- Ảnh bạn tự chèn, bấm vào mở Zalo -->
+    <a href="https://zalo.me/0386316282" target="_blank" rel="noopener noreferrer" title="Chat với tôi trên Zalo" style="display: inline-block; margin-top: 15px;">
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRl-httN0SOtorWurrl9OzxqI0NY3-fpR0qpw&s"
+        alt="Zalo Link"
+        style="width: 60px; height: 60px; border-radius: 12px; box-shadow: 0 0 8px #0ff; cursor: pointer;"
+      />
+    </a>
+  </div>
+</div>
+
+  <script>
+    const btnOn = document.getElementById('btnOn');
+    const btnOff = document.getElementById('btnOff');
+    const slider = document.getElementById('smoothSlider');
+    const smoothValue = document.getElementById('smoothValue');
+
+    function speakSuccessMessage() {
+      const msg = new SpeechSynthesisUtterance('Function enabled successfully.');
+      msg.lang = 'en-US';
+      msg.pitch = 1.2;
+      msg.rate = 1;
+      msg.volume = 1;
+
+      const voices = speechSynthesis.getVoices();
+      const femaleVoice = voices.find(v => v.name.includes('Female') || v.name.includes('Google') || v.gender === 'female');
+      if (femaleVoice) msg.voice = femaleVoice;
+
+      speechSynthesis.speak(msg);
+    }
+
+    btnOn.addEventListener('click', () => {
+      const confirmOn = confirm('Bạn muốn bật chế độ Smoother?');
+      if (confirmOn) {
+        btnOn.classList.add('active');
+        btnOff.classList.remove('active');
+        alert('✅ Đã bật chế độ Smooth!');
+        speakSuccessMessage();
+      }
+    });
+
+    btnOff.addEventListener('click', () => {
+      btnOff.classList.add('active');
+      btnOn.classList.remove('active');
+      alert('❌ Đã tắt chế độ Smooth.');
+    });
+
+    slider.addEventListener('input', () => {
+      smoothValue.textContent = slider.value;
+    });
+
+    speechSynthesis.onvoiceschanged = () => {};
+  </script>
 </body>
 </html>
